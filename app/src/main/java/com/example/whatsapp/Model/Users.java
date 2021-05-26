@@ -53,7 +53,9 @@ public Users( String userName, String mail, String password) {
         this.password = password;
     }
 
-    public String getUserId(String key) {
+
+
+    public String getUserId() {
         return userId;
     }
 
