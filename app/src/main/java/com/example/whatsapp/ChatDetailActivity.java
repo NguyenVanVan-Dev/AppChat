@@ -1,5 +1,6 @@
 package com.example.whatsapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -13,7 +14,10 @@ import com.example.whatsapp.databinding.ActivityChatDetailBinding;
 import com.example.whatsapp.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -41,7 +45,7 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         binding.userNameTV.setText(userName);
         Picasso.get().load(profilePic).placeholder(R.drawable.ic_user).into(binding.profileImage);
-        binding.backArrow.setOnClickListener(new View.OnClickListener() {
+        binding.backArrowGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatDetailActivity.this , MainActivity.class);
@@ -56,6 +60,28 @@ public class ChatDetailActivity extends AppCompatActivity {
 
         final String senderRoom = senderId +recieverId;
         final String recieverRoom = recieverId +senderId;
+
+
+        database.getReference().child("Chats").child(senderRoom)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        messageModels.clear();
+                        for(DataSnapshot snapshot1 : snapshot.getChildren()){
+
+                            MessageModel model = snapshot1.getValue(MessageModel.class);
+
+                            messageModels.add(model);
+                        }
+                        chatAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
 
         binding.send.setOnClickListener(new View.OnClickListener() {

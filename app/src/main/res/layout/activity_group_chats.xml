@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/pylon"
 
-    tools:context=".ChatDetailActivity">
+    tools:context=".GroupChatsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecylarView"
@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="4dp"
-        android:background="@color/pylon"
         android:orientation="horizontal">
 
 
@@ -94,9 +93,9 @@
 
             <TextView
                 android:id="@+id/userNameTV"
-                android:layout_width="55dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:text="ChatsApp"
+                android:text="Group Chats"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profile_image"
                 app:layout_constraintTop_toTopOf="parent" />
