@@ -53,7 +53,7 @@ public class ChatDetailActivity extends AppCompatActivity {
             }
         });
         final ArrayList<MessageModel> messageModels = new ArrayList<>();
-        final ChatAdapter chatAdapter =new ChatAdapter(messageModels,this);
+        final ChatAdapter chatAdapter =new ChatAdapter(messageModels,this,recieverId);
         binding.chatRecylarView.setAdapter(chatAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.chatRecylarView.setLayoutManager(layoutManager);
@@ -70,6 +70,7 @@ public class ChatDetailActivity extends AppCompatActivity {
                         for(DataSnapshot snapshot1 : snapshot.getChildren()){
 
                             MessageModel model = snapshot1.getValue(MessageModel.class);
+                            model.setMessageId(snapshot1.getKey());
 
                             messageModels.add(model);
                         }
